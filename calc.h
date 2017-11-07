@@ -7,7 +7,7 @@
  *
  * CREATED:	    11/06/2017
  *
- * LAST EDITED:	    11/06/2017
+ * LAST EDITED:	    11/07/2017
  ***/
 
 #ifndef __ET_CALC_H__
@@ -32,6 +32,28 @@ struct mc34063_components {
   float r_sc;	/* Sensing resistor */
   float l_min;	/* Minimum value for inductor */
   float c_o;	/* Output filter capacitance */
+  float r_2;	/* R2 */
+  float r_1;	/* R1 */
+};
+
+/*******************************************************************************
+ * CONSTANTS
+ ***/
+
+const float v_sat = 1.0; /* Saturation voltage of Darlington connection */
+
+/* Values of inst. fwd current in diode for values of inst. fwd voltage drop,
+ * read from datasheet. Find v_f by approximating difference between
+ * vf[i * 10] and i_out.
+ */
+const float vf[] = {	/* Calculated by vf[i * 10] */
+  0.01,	/* V_f = 0  */
+  0.01,	/*  = 0.1   */
+  0.02,	/*  = 0.2   */
+  0.3,	/*  = 0.3   */
+  1,	/*  = 0.4   */
+  2.5,	/*  = 0.5   */
+  /* 1.5A is maximum output current, so all further values are irrelevant */
 };
 
 /*******************************************************************************

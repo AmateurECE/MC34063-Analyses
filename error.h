@@ -9,7 +9,7 @@
  *
  * CREATED:	    09/26/2017
  *
- * LAST EDITED:	    09/26/2017
+ * LAST EDITED:	    11/07/2017
  ***/
 
 #ifndef __ERROR_H__
@@ -23,15 +23,6 @@
 #include <string.h>
 #include <stdbool.h>
 
-#include "arg-parse.h"
-
-/*******************************************************************************
- * EXTERNAL REFERENCES
- ***/
-
-extern int yylineno;
-extern char * yytext;
-
 /*******************************************************************************
  * MACRO DEFINITIONS
  ***/
@@ -44,8 +35,8 @@ extern char * yytext;
 #define NC_CODE	    "\033[0m"
 #define WARN_CODE   "\033[1;35m"
 
-#define ERROR_PRINT ""BOLD_CODE"%s:%d:"ERROR_CODE" error: "NC_CODE
-#define WARN_PRINT  ""BOLD_CODE"%s:%d:"WARN_CODE" warning: "NC_CODE
+#define ERROR_PRINT ""BOLD_CODE""ERROR_CODE" error: "NC_CODE
+#define WARN_PRINT  ""BOLD_CODE""WARN_CODE" warning: "NC_CODE
 
 #define parse_error(action, ...)		\
     IF_ELSE(action)(				\
@@ -63,7 +54,6 @@ extern char * yytext;
 
 #define INTERNAL_ERROR(format, ...)	{				\
     PARSE_DO_FPRINTF(stderr, ERROR_PRINT""format"\n\n",			\
-		     yyin_filename, yylineno				\
 		     IF_ELSE(HAS_ARGS(__VA_ARGS__))			\
 		     (, __VA_ARGS__)());				\
     parsing_error = true;						\
@@ -71,21 +61,18 @@ extern char * yytext;
 
 #define INTERNAL_WARN(format, ...)	{			\
     PARSE_DO_FPRINTF(stderr, WARN_PRINT""format"\n\n",		\
-		     yyin_filename, yylineno			\
 		     IF_ELSE(HAS_ARGS(__VA_ARGS__))		\
 		     (, __VA_ARGS__)());			\
 }
 
 #define PARSE_WARN(format, ...)	    {				\
     PARSE_DO_FPRINTF(stderr, WARN_PRINT""format"\n\t%s\n\t^\n",	\
-		     yyin_filename, yylineno,			\
 		     IF_ELSE(HAS_ARGS(__VA_ARGS__))		\
 		     (__VA_ARGS__,)() yytext);			\
 }
 
 #define PARSE_ERROR(format, ...)    {					\
     PARSE_DO_FPRINTF(stderr, ERROR_PRINT""format"\n\t%s\n\t^\n",	\
-		     yyin_filename, yylineno,				\
 		     IF_ELSE(HAS_ARGS(__VA_ARGS__))			\
 		     (__VA_ARGS__,)() yytext);				\
     parsing_error = true;						\
