@@ -133,10 +133,10 @@ int main(int argc, char * argv[])
 	 "R_2\t= %8g\n"
 	 "R_1\t= %8g\n",
 
-	 components.c_t,
-	 components.r_sc,
 	 components.l_min,
+	 components.c_t,
 	 components.c_o,
+	 components.r_sc,
 	 components.r_2,
 	 components.r_1);
 }
