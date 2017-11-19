@@ -7,7 +7,7 @@
  *
  * CREATED:	    11/06/2017
  *
- * LAST EDITED:	    11/07/2017
+ * LAST EDITED:	    11/18/2017
  ***/
 
 /*******************************************************************************
@@ -80,7 +80,7 @@ int calc_std(struct mc34063_params * params,
 
   /* Calculate R2, assuming R1 = 10k */
   /* TODO: Table of values to approximate components */
-  components->r_1 = 10e3;
+  components->r_1 = 1.2e3;
   components->r_2 = r_rat * components->r_1;
   return 0;
 }
@@ -115,9 +115,9 @@ int main(int argc, char * argv[])
 {
   struct mc34063_params params = (struct mc34063_params) {
     .v_in   = 32.0F,
-    .v_out  = 12.2F,
+    .v_out  = 12.1F,
     .v_rip  = 0.1F,
-    .f_s    = 100e3,
+    .f_s    = 1.5e3,
     .i_out  = 0.33
   };
 
